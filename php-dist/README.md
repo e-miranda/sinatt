@@ -51,8 +51,9 @@ Y desplegar automáticamente con un workflow de GitHub Actions hacia cualquier n
 ---
 
 ## 🏢 Datos Corporativos de SINATT
-- **Razón Social:** SINATT Tecnologías e Infraestructura de Redes S.A.C.
-- **Dirección:** Av. Las Begonias 441, Piso 8, San Isidro, Lima - Perú
-- **Central Telefónica:** +51 (1) 719-8400
-- **Emergencias NOC 24/7:** +51 (1) 719-8499
+- **Razón Social:** SINATT Tecnologías e Infraestructura de Redes S.R.L.
+- **Dirección:** Calle Soria Galvarro y Junín, Zona Central, Oruro - Bolivia
+- **Central Telefónica:** +591 (2) 525-4800
+- **Emergencias NOC 24/7:** +591 718-42900
+- **WhatsApp Empresas:** +591 718 42 900
 - **Email Corporativo:** soporte@sinatt.com / contacto@sinatt.com
