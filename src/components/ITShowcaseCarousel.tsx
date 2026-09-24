@@ -12,6 +12,11 @@ import {
   Wifi,
   Sparkles
 } from 'lucide-react';
+import slideDatacenterImg from '../assets/images/hero_network_datacenter_1790185251323.jpg';
+import slideCybersecurityImg from '../assets/images/carousel_cybersecurity_soc_1790208916222.jpg';
+import slideEngineerImg from '../assets/images/carousel_engineer_datacenter_1790208926167.jpg';
+import slideNocImg from '../assets/images/noc_support_center_1790185272915.jpg';
+import slideWifiImg from '../assets/images/carousel_enterprise_wifi_cloud_1790208937401.jpg';
 
 interface Slide {
   id: string;
@@ -42,7 +47,7 @@ export const ITShowcaseCarousel: React.FC<ITShowcaseCarouselProps> = ({ onSelect
       tagColor: 'text-blue-400 bg-blue-950/70 border-blue-600/50',
       badgeBorder: 'from-blue-600 to-cyan-500',
       description: 'Diseño e implementación de gabinetes de alta densidad 42U/45U, contención térmica de pasillos, UPS trifásicos modulares y conmutación automática ATS para cero caídas.',
-      image: '/src/assets/images/hero_network_datacenter_1790185251323.jpg',
+      image: slideDatacenterImg,
       metricValue: '99.98%',
       metricLabel: 'Uptime Eléctrico y Térmico',
       metricColor: 'text-cyan-400',
@@ -56,7 +61,7 @@ export const ITShowcaseCarousel: React.FC<ITShowcaseCarouselProps> = ({ onSelect
       tagColor: 'text-violet-400 bg-violet-950/70 border-violet-600/50',
       badgeBorder: 'from-violet-600 to-indigo-500',
       description: 'Protección perimetral UTM con inspección profunda SSL/TLS, prevención de intrusiones de día cero y túneles cifrados sitio a sitio para sedes corporativas y banca.',
-      image: '/src/assets/images/carousel_cybersecurity_soc_1790208916222.jpg',
+      image: slideCybersecurityImg,
       metricValue: '< 10 min',
       metricLabel: 'Contención de Amenazas',
       metricColor: 'text-violet-400',
@@ -70,7 +75,7 @@ export const ITShowcaseCarousel: React.FC<ITShowcaseCarouselProps> = ({ onSelect
       tagColor: 'text-emerald-400 bg-emerald-950/70 border-emerald-600/50',
       badgeBorder: 'from-emerald-500 to-teal-500',
       description: 'Especialistas certificados CCTT ejecutando barridos de frecuencia de 2 GHz, fusiones ópticas por arco voltaico y reflectometría OTDR con entrega de reportes LinkWare.',
-      image: '/src/assets/images/carousel_engineer_datacenter_1790208926167.jpg',
+      image: slideEngineerImg,
       metricValue: '25 Años',
       metricLabel: 'Garantía Oficial de Canal',
       metricColor: 'text-emerald-400',
@@ -84,7 +89,7 @@ export const ITShowcaseCarousel: React.FC<ITShowcaseCarouselProps> = ({ onSelect
       tagColor: 'text-amber-400 bg-amber-950/70 border-amber-600/50',
       badgeBorder: 'from-amber-500 to-orange-500',
       description: 'Vigilancia continua mediante sondas SNMP y telemetría de latencia. Detección temprana de anomalías y guardia presencial inmediata ante incidencias críticas.',
-      image: '/src/assets/images/noc_support_center_1790185272915.jpg',
+      image: slideNocImg,
       metricValue: '< 15 min',
       metricLabel: 'Respuesta NOC Garantizada',
       metricColor: 'text-amber-400',
@@ -98,7 +103,7 @@ export const ITShowcaseCarousel: React.FC<ITShowcaseCarouselProps> = ({ onSelect
       tagColor: 'text-cyan-400 bg-cyan-950/70 border-cyan-600/50',
       badgeBorder: 'from-cyan-500 to-blue-600',
       description: 'Topologías redundantes LACP, segmentación VLAN por áreas y despliegue de access points Wi-Fi 7 de alta densidad con control centralizado en la nube.',
-      image: '/src/assets/images/carousel_enterprise_wifi_cloud_1790208937401.jpg',
+      image: slideWifiImg,
       metricValue: '10 Gbps',
       metricLabel: 'Velocidad de Backbone Troncal',
       metricColor: 'text-cyan-300',

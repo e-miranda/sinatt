@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ShieldCheck, Cpu, ArrowRight, Activity, CheckCircle2, Phone } from 'lucide-react';
 import { COMPANY_INFO } from '../data/corporateData';
+import heroDatacenterImg from '../assets/images/hero_network_datacenter_1790185251323.jpg';
 
 interface HeroProps {
   onOpenDiagnostic: () => void;
@@ -85,7 +86,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDiagnostic, onOpenChat }) => {
               {/* Image Container with Fallback Scrim */}
               <div className="relative aspect-[16/10] sm:aspect-[16/11] w-full overflow-hidden bg-slate-900">
                 <img
-                  src="/src/assets/images/hero_network_datacenter_1790185251323.jpg"
+                  src={heroDatacenterImg}
                   alt="Centro de datos e infraestructura de telecomunicaciones corporativa SINATT"
                   className={`w-full h-full object-cover transition-opacity duration-700 ${imgLoaded ? 'opacity-100' : 'opacity-90'}`}
                   loading="eager"

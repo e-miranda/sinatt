@@ -1,6 +1,8 @@
 import React from 'react';
 import { ShieldCheck, Activity, Terminal, CheckCircle2, Server, Radio } from 'lucide-react';
 import { COMPANY_INFO } from '../data/corporateData';
+import fiberOpticImg from '../assets/images/fiber_optic_cabling_1790185262882.jpg';
+import nocSupportImg from '../assets/images/noc_support_center_1790185272915.jpg';
 
 export const InfrastructureShowcase: React.FC = () => {
   return (
@@ -27,7 +29,7 @@ export const InfrastructureShowcase: React.FC = () => {
           <div className="lg:col-span-7 bg-[#0B1324] border border-slate-800 rounded-2xl overflow-hidden flex flex-col justify-between shadow-xl">
             <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-900">
               <img
-                src="/src/assets/images/fiber_optic_cabling_1790185262882.jpg"
+                src={fiberOpticImg}
                 alt="Fusiones de fibra óptica y certificación de cableado Fluke en rack de comunicaciones"
                 className="w-full h-full object-cover"
                 loading="lazy"
@@ -73,7 +75,7 @@ export const InfrastructureShowcase: React.FC = () => {
           <div className="lg:col-span-5 bg-[#0B1324] border border-slate-800 rounded-2xl overflow-hidden flex flex-col justify-between shadow-xl">
             <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-900">
               <img
-                src="/src/assets/images/noc_support_center_1790185272915.jpg"
+                src={nocSupportImg}
                 alt="Centro de Operaciones de Red NOC 24/7 SINATT"
                 className="w-full h-full object-cover"
                 loading="lazy"
