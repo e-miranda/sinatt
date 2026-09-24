@@ -27,6 +27,7 @@ interface Slide {
   badgeBorder: string;
   description: string;
   image: string;
+  fallbackImage: string;
   metricValue: string;
   metricLabel: string;
   metricColor: string;
@@ -48,6 +49,7 @@ export const ITShowcaseCarousel: React.FC<ITShowcaseCarouselProps> = ({ onSelect
       badgeBorder: 'from-blue-600 to-cyan-500',
       description: 'Diseño e implementación de gabinetes de alta densidad 42U/45U, contención térmica de pasillos, UPS trifásicos modulares y conmutación automática ATS para cero caídas.',
       image: slideDatacenterImg,
+      fallbackImage: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80',
       metricValue: '99.98%',
       metricLabel: 'Uptime Eléctrico y Térmico',
       metricColor: 'text-cyan-400',
@@ -62,6 +64,7 @@ export const ITShowcaseCarousel: React.FC<ITShowcaseCarouselProps> = ({ onSelect
       badgeBorder: 'from-violet-600 to-indigo-500',
       description: 'Protección perimetral UTM con inspección profunda SSL/TLS, prevención de intrusiones de día cero y túneles cifrados sitio a sitio para sedes corporativas y banca.',
       image: slideCybersecurityImg,
+      fallbackImage: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1600&q=80',
       metricValue: '< 10 min',
       metricLabel: 'Contención de Amenazas',
       metricColor: 'text-violet-400',
@@ -76,6 +79,7 @@ export const ITShowcaseCarousel: React.FC<ITShowcaseCarouselProps> = ({ onSelect
       badgeBorder: 'from-emerald-500 to-teal-500',
       description: 'Especialistas certificados CCTT ejecutando barridos de frecuencia de 2 GHz, fusiones ópticas por arco voltaico y reflectometría OTDR con entrega de reportes LinkWare.',
       image: slideEngineerImg,
+      fallbackImage: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1600&q=80',
       metricValue: '25 Años',
       metricLabel: 'Garantía Oficial de Canal',
       metricColor: 'text-emerald-400',
@@ -90,6 +94,7 @@ export const ITShowcaseCarousel: React.FC<ITShowcaseCarouselProps> = ({ onSelect
       badgeBorder: 'from-amber-500 to-orange-500',
       description: 'Vigilancia continua mediante sondas SNMP y telemetría de latencia. Detección temprana de anomalías y guardia presencial inmediata ante incidencias críticas.',
       image: slideNocImg,
+      fallbackImage: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=80',
       metricValue: '< 15 min',
       metricLabel: 'Respuesta NOC Garantizada',
       metricColor: 'text-amber-400',
@@ -104,6 +109,7 @@ export const ITShowcaseCarousel: React.FC<ITShowcaseCarouselProps> = ({ onSelect
       badgeBorder: 'from-cyan-500 to-blue-600',
       description: 'Topologías redundantes LACP, segmentación VLAN por áreas y despliegue de access points Wi-Fi 7 de alta densidad con control centralizado en la nube.',
       image: slideWifiImg,
+      fallbackImage: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1600&q=80',
       metricValue: '10 Gbps',
       metricLabel: 'Velocidad de Backbone Troncal',
       metricColor: 'text-cyan-300',
@@ -239,6 +245,12 @@ export const ITShowcaseCarousel: React.FC<ITShowcaseCarouselProps> = ({ onSelect
                 className="w-full h-full object-cover object-center scale-105 group-hover:scale-100 transition-transform duration-1000 ease-out"
                 loading={idx === 0 ? 'eager' : 'lazy'}
                 referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (slide.fallbackImage && !target.src.includes('unsplash')) {
+                    target.src = slide.fallbackImage;
+                  }
+                }}
               />
               
               {/* Measured contrast scrim with vibrant executive tint */}

@@ -1,6 +1,53 @@
 # 🌐 Guía para Ver y Publicar tu Página SINATT desde GitHub
 
-Tienes dos formas principales y gratuitas de publicar tu página web desde GitHub:
+---
+
+## 🖼️ Solución: ¿Por qué no se veían las imágenes en tu GitHub Pages?
+
+En el código fuente que compartiste se lee:
+```html
+<script type="module" crossorigin src="./assets/index-BY0OmQcK.js"></script>
+```
+
+**La causa exacta**:  
+El archivo `index-BY0OmQcK.js` corresponde a una **compilación anterior** en tu repositorio donde las imágenes no estaban empaquetadas.
+
+En la **nueva compilación** (`index-CUEDUhLd.js`):
+1. Todas las 6 fotografías profesionales de infraestructura, NOC, fibra y data centers están empaquetadas en `docs/assets/` (y `dist/assets/`).
+2. Se agregaron controladores automáticos de contingencia (`onError`) para que nunca aparezca un icono roto.
+
+---
+
+## 🚀 Cómo actualizar tu GitHub Pages para que aparezcan las imágenes:
+
+### Caso A: Si usas la terminal con Git (Lo más rápido)
+Ejecuta estos 3 comandos en la carpeta de tu proyecto:
+```bash
+git add .
+git commit -m "Actualizar imágenes y compilación de producción"
+git push origin main
+```
+*(Si tu rama principal es `master`, escribe `git push origin master`)*.
+
+---
+
+### Caso B: Si usas GitHub Actions (`.github/workflows/deploy.yml`)
+1. Asegúrate de haber subido la carpeta `src/` actualizada a tu repositorio en GitHub para que GitHub Actions compile la versión correcta.
+2. Ve a la pestaña **Actions** en tu repositorio de GitHub para confirmar que el workflow `Deploy to GitHub Pages` terminó con check verde (✅).
+3. Una vez terminado, abre tu enlace de GitHub Pages y presiona **Ctrl + F5** (o **Cmd + Shift + R** en Mac) para forzar la recarga sin caché.
+
+---
+
+### Caso C: Si usas "Deploy from a branch" -> carpeta `/docs`
+1. Sube o reemplaza la carpeta **`docs/`** en tu repositorio de GitHub con los nuevos archivos:
+   - `docs/index.html`
+   - `docs/assets/` (con todos los archivos `.jpg`, `.css` y `.js`)
+   - `docs/.nojekyll`
+2. En GitHub: ve a **Settings** -> **Pages**:
+   - **Source**: `Deploy from a branch`
+   - **Branch**: `main` (o `master`) y carpeta: `/docs`
+   - Haz clic en **Save**.
+3. En 1 minuto tu web estará lista con todas las fotos visibles.
 
 ---
 

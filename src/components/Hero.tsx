@@ -92,6 +92,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDiagnostic, onOpenChat }) => {
                   loading="eager"
                   referrerPolicy="no-referrer"
                   onLoad={() => setImgLoaded(true)}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    if (!target.src.includes('unsplash')) {
+                      target.src = 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80';
+                    }
+                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0E1628] via-[#0E1628]/30 to-transparent" />
                 

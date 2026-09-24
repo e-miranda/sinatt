@@ -34,6 +34,12 @@ export const InfrastructureShowcase: React.FC = () => {
                 className="w-full h-full object-cover"
                 loading="lazy"
                 referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (!target.src.includes('unsplash')) {
+                    target.src = 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80';
+                  }
+                }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0B1324] via-[#0B1324]/40 to-transparent" />
               
@@ -80,6 +86,12 @@ export const InfrastructureShowcase: React.FC = () => {
                 className="w-full h-full object-cover"
                 loading="lazy"
                 referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  if (!target.src.includes('unsplash')) {
+                    target.src = 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80';
+                  }
+                }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0B1324] via-[#0B1324]/40 to-transparent" />
               
