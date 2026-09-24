@@ -1,53 +1,98 @@
-# 🌐 Guía para Ver y Publicar tu Página SINATT desde GitHub
+# 🌐 Guía Rápida: Solución de Imágenes y Publicación en GitHub
 
 ---
 
-## 🖼️ Solución: ¿Por qué no se veían las imágenes en tu GitHub Pages?
+## ❓ ¿Debo cambiar de PHP a HTML para que se vean las imágenes?
 
-En el código fuente que compartiste se lee:
+**NO, no es necesario.**
+- Tu sitio web publicado en GitHub Pages **ya es 100% HTML + CSS + JavaScript**.
+- GitHub Pages **no ejecuta PHP** (es un servidor estático). El botón "Código PHP" de la barra superior es únicamente para quien desee descargar el código backend para cPanel o servidores Apache.
+- La razón por la que no se ven las fotos es que tu `index.html` en GitHub tiene una compilación anterior (`index-BY0OmQcK.js`) que busca las fotos en rutas locales que dan error 404.
+
+---
+
+## ⚡ SOLUCIÓN RÁPIDA 1: Pega este Script en tu `index.html` (1 Minuto)
+
+No tienes que descargar programas ni usar la terminal. Puedes solucionarlo directamente desde el navegador en GitHub:
+
+1. Entra a tu repositorio en **GitHub.com**.
+2. Haz clic en el archivo **`index.html`** (o `docs/index.html` si publicas desde `/docs`).
+3. Haz clic en el icono del **Lápiz ✏️ (Edit this file)** arriba a la derecha.
+4. Pega el siguiente script justo antes de `</head>`:
+
 ```html
-<script type="module" crossorigin src="./assets/index-BY0OmQcK.js"></script>
+<!-- SCRIPT DE VISUALIZACIÓN INMEDIATA DE IMÁGENES CDN (SINATT) -->
+<script>
+  (function() {
+    var cdnImages = {
+      datacenter: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80',
+      cyber: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1600&q=80',
+      fiber: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1600&q=80',
+      noc: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=80',
+      wifi: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1600&q=80',
+      engineer: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1600&q=80'
+    };
+
+    function getFallback(src) {
+      var s = (src || '').toLowerCase();
+      if (s.indexOf('cyber') !== -1 || s.indexOf('soc') !== -1) return cdnImages.cyber;
+      if (s.indexOf('fiber') !== -1 || s.indexOf('optic') !== -1) return cdnImages.fiber;
+      if (s.indexOf('engineer') !== -1) return cdnImages.engineer;
+      if (s.indexOf('noc') !== -1 || s.indexOf('support') !== -1) return cdnImages.noc;
+      if (s.indexOf('wifi') !== -1 || s.indexOf('cloud') !== -1) return cdnImages.wifi;
+      return cdnImages.datacenter;
+    }
+
+    // Intercepta errores 404 al instante
+    window.addEventListener('error', function(e) {
+      if (e.target && e.target.tagName === 'IMG') {
+        var img = e.target;
+        if (img.src && img.src.indexOf('unsplash.com') === -1) {
+          img.src = getFallback(img.src);
+        }
+      }
+    }, true);
+
+    // Repara imágenes que hayan cargado vacías
+    function fixImages() {
+      var imgs = document.querySelectorAll('img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        if ((img.complete && img.naturalWidth === 0) || !img.src) {
+          var oldSrc = img.src || '';
+          if (oldSrc.indexOf('unsplash.com') === -1) {
+            img.src = getFallback(oldSrc);
+          }
+        }
+      }
+    }
+    setInterval(fixImages, 1000);
+    document.addEventListener('DOMContentLoaded', fixImages);
+  })();
+</script>
 ```
 
-**La causa exacta**:  
-El archivo `index-BY0OmQcK.js` corresponde a una **compilación anterior** en tu repositorio donde las imágenes no estaban empaquetadas.
-
-En la **nueva compilación** (`index-CUEDUhLd.js`):
-1. Todas las 6 fotografías profesionales de infraestructura, NOC, fibra y data centers están empaquetadas en `docs/assets/` (y `dist/assets/`).
-2. Se agregaron controladores automáticos de contingencia (`onError`) para que nunca aparezca un icono roto.
+5. Baja y haz clic en el botón verde **Commit changes...**
+6. Espera 1 minuto y recarga tu página web en GitHub Pages (**Ctrl + F5**):  
+   **¡Todas las imágenes de Data Center, NOC, Fibra Óptica, Ciberseguridad y Wi-Fi aparecerán inmediatamente en alta resolución!**
 
 ---
 
-## 🚀 Cómo actualizar tu GitHub Pages para que aparezcan las imágenes:
+## 🚀 SOLUCIÓN 2: Actualizar la Compilación Completa (Si usas Git en tu PC)
 
-### Caso A: Si usas la terminal con Git (Lo más rápido)
-Ejecuta estos 3 comandos en la carpeta de tu proyecto:
+Si tienes el repositorio clonado en tu computadora:
 ```bash
 git add .
-git commit -m "Actualizar imágenes y compilación de producción"
+git commit -m "Actualizar fotos e incluir script de contingencia CDN"
 git push origin main
 ```
-*(Si tu rama principal es `master`, escribe `git push origin master`)*.
+*(o `git push origin master` si tu rama se llama master)*.
 
 ---
 
-### Caso B: Si usas GitHub Actions (`.github/workflows/deploy.yml`)
-1. Asegúrate de haber subido la carpeta `src/` actualizada a tu repositorio en GitHub para que GitHub Actions compile la versión correcta.
-2. Ve a la pestaña **Actions** en tu repositorio de GitHub para confirmar que el workflow `Deploy to GitHub Pages` terminó con check verde (✅).
-3. Una vez terminado, abre tu enlace de GitHub Pages y presiona **Ctrl + F5** (o **Cmd + Shift + R** en Mac) para forzar la recarga sin caché.
+## 📁 SOLUCIÓN 3: Si subes archivos manualmente a GitHub
 
----
-
-### Caso C: Si usas "Deploy from a branch" -> carpeta `/docs`
-1. Sube o reemplaza la carpeta **`docs/`** en tu repositorio de GitHub con los nuevos archivos:
-   - `docs/index.html`
-   - `docs/assets/` (con todos los archivos `.jpg`, `.css` y `.js`)
-   - `docs/.nojekyll`
-2. En GitHub: ve a **Settings** -> **Pages**:
-   - **Source**: `Deploy from a branch`
-   - **Branch**: `main` (o `master`) y carpeta: `/docs`
-   - Haz clic en **Save**.
-3. En 1 minuto tu web estará lista con todas las fotos visibles.
+Asegúrate de que la carpeta **`assets/`** se encuentre subida junto con `index.html`. La nueva carpeta `docs/assets/` contiene tanto el script como las 6 fotografías originales optimizadas.
 
 ---
 

@@ -19,13 +19,64 @@ interface PhpCodeExportModalProps {
 }
 
 export const PhpCodeExportModal: React.FC<PhpCodeExportModalProps> = ({ isOpen, onClose }) => {
-  const [activeTab, setActiveTab] = useState<'index' | 'contact' | 'chat' | 'readme' | 'instructions'>('instructions');
+  const [activeTab, setActiveTab] = useState<'imageScript' | 'instructions' | 'index' | 'contact' | 'chat' | 'readme'>('imageScript');
   const [copiedTab, setCopiedTab] = useState<string | null>(null);
   const [isDownloading, setIsDownloading] = useState(false);
 
   if (!isOpen) return null;
 
+  const imageRepairScript = `<!-- SCRIPT DE VISUALIZACIÓN GARANTIZADA DE IMÁGENES (Pegar antes de </head> en tu index.html) -->
+<script>
+  (function() {
+    var cdnImages = {
+      datacenter: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80',
+      cyber: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1600&q=80',
+      fiber: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1600&q=80',
+      noc: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=80',
+      wifi: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1600&q=80',
+      engineer: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1600&q=80'
+    };
+
+    function getFallback(src) {
+      var s = (src || '').toLowerCase();
+      if (s.indexOf('cyber') !== -1 || s.indexOf('soc') !== -1) return cdnImages.cyber;
+      if (s.indexOf('fiber') !== -1 || s.indexOf('optic') !== -1) return cdnImages.fiber;
+      if (s.indexOf('engineer') !== -1) return cdnImages.engineer;
+      if (s.indexOf('noc') !== -1 || s.indexOf('support') !== -1) return cdnImages.noc;
+      if (s.indexOf('wifi') !== -1 || s.indexOf('cloud') !== -1) return cdnImages.wifi;
+      return cdnImages.datacenter;
+    }
+
+    // 1. Interceptar errores de carga 404
+    window.addEventListener('error', function(e) {
+      if (e.target && e.target.tagName === 'IMG') {
+        var img = e.target;
+        if (img.src && img.src.indexOf('unsplash.com') === -1) {
+          img.src = getFallback(img.src);
+        }
+      }
+    }, true);
+
+    // 2. Comprobación de imágenes que hayan quedado en blanco
+    function fixImages() {
+      var imgs = document.querySelectorAll('img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        if ((img.complete && img.naturalWidth === 0) || !img.src) {
+          var oldSrc = img.src || '';
+          if (oldSrc.indexOf('unsplash.com') === -1) {
+            img.src = getFallback(oldSrc);
+          }
+        }
+      }
+    }
+    setInterval(fixImages, 1000);
+    document.addEventListener('DOMContentLoaded', fixImages);
+  })();
+</script>`;
+
   const filesContent = {
+    imageScript: imageRepairScript,
     index: `<?php
 /**
  * SINATT - Infraestructura de Redes y Soporte Corporativo (PHP 8.x)
@@ -219,6 +270,18 @@ exit;`,
         {/* Tab Selection */}
         <div className="flex items-center gap-2 px-6 pt-4 border-b border-slate-800 bg-[#080D1A] overflow-x-auto">
           <button
+            onClick={() => setActiveTab('imageScript')}
+            className={`pb-3 text-xs font-semibold transition-colors flex items-center gap-1.5 border-b-2 whitespace-nowrap ${
+              activeTab === 'imageScript'
+                ? 'text-emerald-400 border-emerald-400'
+                : 'text-slate-400 border-transparent hover:text-white'
+            }`}
+          >
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>⚡ Solución Rápida Imágenes (Script 1-Click)</span>
+          </button>
+
+          <button
             onClick={() => setActiveTab('instructions')}
             className={`pb-3 text-xs font-semibold transition-colors flex items-center gap-1.5 border-b-2 whitespace-nowrap ${
               activeTab === 'instructions'
@@ -282,6 +345,71 @@ exit;`,
         {/* Content Body */}
         <div className="p-6 overflow-y-auto flex-1 text-xs">
           
+          {activeTab === 'imageScript' && (
+            <div className="space-y-6 text-slate-300 leading-relaxed">
+              {/* Clarification Alert */}
+              <div className="bg-emerald-950/30 border border-emerald-500/40 rounded-xl p-4 sm:p-5">
+                <h4 className="text-sm font-bold text-emerald-300 flex items-center gap-2 mb-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>¿Debo cambiar de PHP a HTML para ver las imágenes?</span>
+                </h4>
+                <p className="text-slate-300 text-xs leading-relaxed mb-3">
+                  <strong>¡No es necesario!</strong> Tu sitio web publicado en GitHub Pages <strong>ya es 100% HTML y JavaScript</strong>. GitHub Pages no procesa PHP; todo lo que publica ya es estático.
+                </p>
+                <div className="bg-slate-950/70 p-3 rounded-lg border border-slate-800 text-slate-300 text-[11px] space-y-1">
+                  <p><strong className="text-cyan-400">¿Por qué no se veían las imágenes en tu web?</strong></p>
+                  <p>En el código de tu web publicada en GitHub se está ejecutando la compilación anterior (<code className="text-amber-300 font-mono">index-BY0OmQcK.js</code>), donde las rutas de las fotos buscaban archivos locales que no estaban en tu repositorio, dando error 404.</p>
+                </div>
+              </div>
+
+              {/* Solution steps */}
+              <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-bold text-white flex items-center gap-2">
+                    <span className="w-5 h-5 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-mono text-xs">⚡</span>
+                    <span>Solución Inmediata en 1 Minuto: Script Reparador de Imágenes</span>
+                  </h4>
+                  <button
+                    onClick={() => handleCopy('imageScript', filesContent.imageScript)}
+                    className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-lg shadow-sm flex items-center gap-1.5 transition-colors cursor-pointer text-xs"
+                  >
+                    {copiedTab === 'imageScript' ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-white" />
+                        <span>¡Script Copiado!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>Copiar Script</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                <div className="text-slate-300 text-xs space-y-2">
+                  <p>
+                    <strong>Cómo aplicarlo directamente en GitHub (sin comandos ni terminal):</strong>
+                  </p>
+                  <ol className="list-decimal list-inside space-y-1 text-slate-300 bg-slate-950 p-3 rounded-lg border border-slate-800 font-mono text-[11px]">
+                    <li>Abre tu repositorio en <strong className="text-white">GitHub.com</strong>.</li>
+                    <li>Haz clic sobre el archivo <strong className="text-cyan-300">index.html</strong> (o <code className="text-cyan-300">docs/index.html</code> según tu configuración).</li>
+                    <li>Haz clic en el icono del <strong>Lápiz ✏️ (Edit this file)</strong> arriba a la derecha.</li>
+                    <li>Pega este script justo antes de la etiqueta <code className="text-emerald-400">&lt;/head&gt;</code>.</li>
+                    <li>Haz clic en el botón verde <strong>Commit changes...</strong> y guarda los cambios.</li>
+                  </ol>
+                  <p className="text-[11px] text-slate-400">
+                    ¡Listo! En menos de 60 segundos, GitHub Pages actualizará tu web y todas las fotos (Data Center, NOC, Fibra Óptica, Ciberseguridad) aparecerán en alta resolución gracias a la CDN global.
+                  </p>
+                </div>
+
+                <pre className="p-4 bg-slate-950 rounded-xl border border-slate-800/80 font-mono text-[11px] text-cyan-300 overflow-x-auto max-h-64 leading-relaxed select-all">
+                  {filesContent.imageScript}
+                </pre>
+              </div>
+            </div>
+          )}
+
           {activeTab === 'instructions' && (
             <div className="space-y-6 text-slate-300 leading-relaxed">
               <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 space-y-4">

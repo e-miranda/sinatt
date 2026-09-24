@@ -59,14 +59,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenPhpModal, onOpenDiagnostic
 
         {/* Zone 3: Primary Actions (Single-line controls) */}
         <div className="hidden sm:flex items-center gap-3">
-          {/* PHP Code Export Trigger */}
+          {/* Code & Scripts Export Trigger */}
           <button
             onClick={onOpenPhpModal}
             className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-cyan-300 bg-slate-900/90 hover:bg-slate-800 border border-cyan-700/60 rounded-xl transition-all shadow-sm hover:shadow-cyan-950/40 whitespace-nowrap cursor-pointer"
-            title="Ver y descargar código PHP para ejecutar desde GitHub"
+            title="Ver código, scripts de reparación de imágenes y exportación para GitHub"
           >
             <Code2 className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Código PHP GitHub</span>
+            <span>Código & Scripts GitHub</span>
           </button>
 
           {/* Emergency 24/7 Phone */}

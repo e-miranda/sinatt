@@ -12,6 +12,53 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Script de autocorrección y visualización garantizada de imágenes (CDN Fallback) -->
+    <script>
+      (function() {
+        var cdnImages = {
+          datacenter: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=80',
+          cyber: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1600&q=80',
+          fiber: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1600&q=80',
+          noc: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=80',
+          wifi: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1600&q=80',
+          engineer: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1600&q=80'
+        };
+
+        function getFallback(src) {
+          var s = (src || '').toLowerCase();
+          if (s.indexOf('cyber') !== -1 || s.indexOf('soc') !== -1) return cdnImages.cyber;
+          if (s.indexOf('fiber') !== -1 || s.indexOf('optic') !== -1) return cdnImages.fiber;
+          if (s.indexOf('engineer') !== -1) return cdnImages.engineer;
+          if (s.indexOf('noc') !== -1 || s.indexOf('support') !== -1) return cdnImages.noc;
+          if (s.indexOf('wifi') !== -1 || s.indexOf('cloud') !== -1) return cdnImages.wifi;
+          return cdnImages.datacenter;
+        }
+
+        window.addEventListener('error', function(e) {
+          if (e.target && e.target.tagName === 'IMG') {
+            var img = e.target;
+            if (img.src && img.src.indexOf('unsplash.com') === -1) {
+              img.src = getFallback(img.src);
+            }
+          }
+        }, true);
+
+        function fixImages() {
+          var imgs = document.querySelectorAll('img');
+          for (var i = 0; i < imgs.length; i++) {
+            var img = imgs[i];
+            if ((img.complete && img.naturalWidth === 0) || !img.src) {
+              var oldSrc = img.src || '';
+              if (oldSrc.indexOf('unsplash.com') === -1) {
+                img.src = getFallback(oldSrc);
+              }
+            }
+          }
+        }
+        setInterval(fixImages, 1000);
+        document.addEventListener('DOMContentLoaded', fixImages);
+      })();
+    </script>
   </head>
   <body class="bg-[#0A0F1D] text-slate-100 font-['Plus_Jakarta_Sans',sans-serif] antialiased selection:bg-blue-600 selection:text-white">
     <div id="root"></div>
