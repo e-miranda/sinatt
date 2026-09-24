@@ -1,0 +1,6 @@
+{
+  "name": "SINATT - Infraestructura de Redes, TI y Soporte Corporativo",
+  "description": "Soluciones corporativas de infraestructura tecnológica, cableado estructurado, redes y soporte técnico 24/7 para empresas con SLA garantizado.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
